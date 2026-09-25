@@ -21,6 +21,8 @@ import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.http.URLProtocol
@@ -48,6 +50,11 @@ class FirmwareFetcher(
         */
 
         expectSuccess = false
+
+        defaultRequest {
+            header("User-Agent", "Kies2.0_FUS")
+        }
+        
         HttpResponseValidator {
             validateResponse { response ->
                 if (!response.status.isSuccess()) {
